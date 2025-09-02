@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/RahulVts007/ToDo-CLI/issues"
   },
-  "homepage": "https://github.com/RahulVts007/ToDo-CLI#readme"
+  "homepage": "https://github.com/RahulVts007/ToDo-CLI#readme",
+  "dependencies": {
+    "commander": "^14.0.0"
+  }
 }
