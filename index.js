@@ -4,20 +4,19 @@ import { Command } from 'commander'
 
 var program = new Command();
 
-function path () {
-    var file_path = null;
-    function set(file){
-        file_path = file;
+class path_handler {
+    file_path = null;
+
+    set file_path(file){
+        this._file_path = file;
     }
-    function get (){
-        return file_path;
+
+    get file_path () {
+        return this.file_path;
     }
-    return {set , get};
 }
 
-const path = path();
-
-
+const path = new path_handler();
 
 program
     .name("todo")
@@ -28,7 +27,7 @@ program
     .command("start")
     .argument("<file>", "File where data will be kept")
     .action((file) => {
-        path.set(file);
+        path.file_path = file;
     })
 
 
