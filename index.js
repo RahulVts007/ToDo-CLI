@@ -1,6 +1,7 @@
 #!/usr/bin/env node
-
+import fs from 'fs';
 import { Command } from 'commander'
+import path from 'path';
 
 var program = new Command();
 
@@ -16,7 +17,7 @@ class path_handler {
     }
 }
 
-const path = new path_handler();
+const storage = new path_handler();
 
 program
     .name("todo")
@@ -27,8 +28,18 @@ program
     .command("start")
     .argument("<file>", "File where data will be kept")
     .action((file) => {
-        path.file_path = file;
+
+        const extension = path.extname(`${file}`).toLowerCase();
+
+        if(extension == ".json"){
+            storage.file_path = file;
+        }
+        else{
+            console.error("File is not JSON");
+        }
+
     })
+
 
 
 program.parse(process.argv);
