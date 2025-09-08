@@ -8,11 +8,11 @@ var program = new Command();
 class path_handler {
     file_path = null;
 
-    set file_path(file){
+    set file_path(file) {
         this._file_path = file;
     }
 
-    get file_path () {
+    get file_path() {
         return this.file_path;
     }
 }
@@ -31,18 +31,51 @@ program
 
         const extension = path.extname(`${file}`).toLowerCase();
 
-        if(extension == ".json"){
+        if (extension == ".json") {
             storage.file_path = file;
         }
-        else{
+        else {
             console.error("File is not JSON");
         }
+    })
 
+program
+    .command("init")
+    .argument("[file]", "Initialise the JSON File", `${storage.file_path}`)
+    .action((file) => {
+        fs.stat(`${file}`, (err, stats) => {
+            if (err) {
+                console.log(err);
+                return;
+            }
+
+            if (stats.size != 0) {
+                console.log("File is not Empty")
+            }
+            else {
+                fs.appendFile(`${file}`, `${JSON.stringify(
+                    {
+                        "tasks": [
+
+                        ]
+                    })}`, (err) => {
+                        if (err) {
+                            console.log(err);
+
+                        }
+                        return;
+                    })
+                console.log("File Initialised");
+            }
+        });
     })
 
 
-
 program.parse(process.argv);
+
+
+
+
 
 
 
